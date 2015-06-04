@@ -16,10 +16,10 @@ USERNAME = "superrz@163.com"
 PASSWORD = "LFJRn8_3hJnq--2w75mEZw"
 
 
-def send_message_mandrillcc(to,title,body,cc=None):
+def send_message_mandrillcc(to,title,body):
     """
 
-    :param to:
+    :param to: []
     :param title:
     :param body:
     :param cc:
@@ -29,21 +29,15 @@ def send_message_mandrillcc(to,title,body,cc=None):
     msg = MIMEMultipart('alternative')
     msg['Subject'] = Header(title,"utf-8")
     msg['From'] = "JINLONG <notifications@jinlong.com>" # Your from name and email address
-    msg['to'] = to
-    msg['Cc'] = cc
-
-    emaillist = []
-    if cc:
-        emaillist = [ c for c in cc.split(",") ]
-    emaillist.append(msg['to'])
+    msg['to'] = ";".join(to)
 
     part2 = MIMEText(body, 'html','utf-8')
     msg.attach(part2)
     s = smtplib.SMTP(HOST, 587)
     s.login(USERNAME, PASSWORD)
-    s.sendmail(msg['From'], emaillist, msg.as_string())
+    s.sendmail(msg['From'], to, msg.as_string())
     s.quit()
 
 if __name__ == '__main__':
-    send_message_mandrillcc("wangjl@vilstart.com", "hehe", "this is test msg")
+    send_message_mandrillcc(["wangjl@vilstart.com", "superrz@163.com"], "pppp", "this is test msg")
 
