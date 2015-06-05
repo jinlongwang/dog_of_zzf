@@ -22,9 +22,12 @@ class News(BaseModel):
 #News.create_table()
 if __name__ == "__main__":
     #News.create_table()
-    a = News(title="hehe")
-    a.save()
+    #a = News(title="hehe")
+    #a.save()
 
+    a =  News.filter(title="hehe")
+    for i in a:
+        print i.title
 
 
 
